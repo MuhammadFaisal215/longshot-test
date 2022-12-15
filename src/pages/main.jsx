@@ -6,27 +6,15 @@ import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import Link from "@mui/material/Link";
-import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import { mainListItems } from "./listItems";
-import { intentMap, pageData } from "../common/data/data";
-import TabsView from "../components/TabsView";
 import * as _ from "lodash";
-import { addPrefixToNumber, keywordDifficulty } from "../common/helper";
 import DashboardView from "./DashboardView";
-// import Chart from './Chart';
-// import Deposits from './Deposits';
-// import Orders from './Orders';
-import { BrowserRouter as RouterView, Switch, Route } from "react-router-dom";
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import Dragables from "./Dragables";
 
 const drawerWidth = 240;
@@ -79,15 +67,18 @@ const mdTheme = createTheme();
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
-  const [selectedData, setSelectedData] = React.useState([]);
+  const [routeState, setRouteState] = React.useState(1);
 
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
+  const handleRouteState = (stateValue) => {
+    setRouteState(stateValue)
+  }
+
   return (
     <ThemeProvider theme={mdTheme}>
-        <RouterView>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
 
@@ -105,16 +96,37 @@ function DashboardContent() {
             </IconButton>
           </Toolbar>
           <Divider />
-          <List component="nav">{mainListItems}</List>
+          <List component="nav">
+            <ListItemButton>
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <span onClick={() => handleRouteState(1)}>
+                <ListItemText primary="Dashboard" />
+              </span>
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <span onClick={() => handleRouteState(2)}>
+                <ListItemText primary="Dragables" />
+              </span>
+            </ListItemButton>
+          </List>
         </Drawer>
-          <Switch>
-            <Route path="/" exact component={DashboardView} />
-            <Route path="/dragables" exact component={Dragables} />
-          </Switch>
+        {renderComponents(routeState)}
       </Box>
-      </RouterView>
     </ThemeProvider>
   );
+}
+
+function renderComponents(routeState) {
+  if (routeState == 1) {
+    return <DashboardView />;
+  } else if (routeState == 2) {
+    return <Dragables />;
+  }
 }
 
 export default function Dashboard() {
