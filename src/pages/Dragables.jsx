@@ -8,7 +8,6 @@ import Draggable from "react-draggable";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import DraggableList from "react-draggable-lists";
 
 export default function Dragables() {
   const data = [
@@ -36,31 +35,7 @@ export default function Dragables() {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Paper>
-            <DraggableList width={300} height={50} rowSize={1} 
-                handleMouseUp = {() => {
-                    console.log('handleMouseUp')
-                }}
-                handleMouseMove= {() => {
-                    console.log('handleMouseMove')
-                }}
-                handleClick= {() => {
-                    console.log('handleClick')
-                }}
-                handleMouseDown= {() => {
-                    console.log('handleMouseDown')
-                }}
-            >
-            {data.map((i, index) => (
-              <ListItem key={index} component="div" onDragOver={() => {
-                console.log('handleMouseDown')
-            }}>
-              <ListItemButton>
-                <ListItemText primary={i} />
-              </ListItemButton>
-            </ListItem>
-            ))}
-          </DraggableList>
-              {/* {data.map((i, index) => (
+              {data.map((i, index) => (
                 <Draggable
                   key={index}
                   axis="y"
@@ -87,7 +62,7 @@ export default function Dragables() {
                     </ListItemButton>
                   </ListItem>
                 </Draggable>
-              ))} */}
+              ))}
             </Paper>
           </Grid>
         </Grid>
